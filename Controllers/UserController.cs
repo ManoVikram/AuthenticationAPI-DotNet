@@ -25,10 +25,13 @@ namespace AuthenticationAPI.Controllers
             if (userObj == null)
                 return BadRequest();
 
-            var user = await _authContext.Users.FirstOrDefaultAsync(x => x.Email == userObj.Email && x.Password == userObj.Password);
+            var user = await _authContext.Users.FirstOrDefaultAsync(x => x.Email == userObj.Email);
 
             if (user == null)
                 return NotFound(new { Message = "User Not Found!" });
+
+            if (PasswordHasher.VerifyPassword(userObj.Password, user.Password))
+                return BadRequest(new { Message = "Incorrect password!" });
 
             return Ok(new { Message = "Login Success!" });
         }
