@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using AuthenticationAPI.Context;
 using AuthenticationAPI.Helpers;
 using AuthenticationAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -67,6 +68,7 @@ namespace AuthenticationAPI.Controllers
             return Ok(new { Message = "User Registered!" });
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<User>> GetAllUsers()
         {
@@ -100,6 +102,7 @@ namespace AuthenticationAPI.Controllers
             var key = Encoding.ASCII.GetBytes("veryverysecret.....");
             var identity = new ClaimsIdentity(new Claim[] {
                 // new Claim(ClaimTypes.Role, user.Role"),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.Name),
             });
 
