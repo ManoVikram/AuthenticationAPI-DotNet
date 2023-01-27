@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "oxQPHj+SQxTFDsYyOIqUtSlhU9LQ3ZBmOBzs78F7Lq/3+aecbYRZF6hHeRutzt9dFJ+AI6lXNcElRqXGBKXd1Q==",
+  "dgSpecHash": "dLsvD2lr7+p9QEZnBugtPcyr+EEg8a0cxaCU7NubWXD9VzKtzYOrnh9puYlMqsdfhGs8weHy00OHnQyZwgaz8Q==",
   "success": true,
   "projectFilePath": "/media/manovik18/Volume_A/Palak Jain/Work/Authentication_LoginSignup/AuthenticationAPI/AuthenticationAPI.csproj",
   "expectedPackageFiles": [
     "/home/manovik18/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/home/manovik18/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",
     "/home/manovik18/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
-    "/home/manovik18/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.10/microsoft.aspnetcore.authentication.jwtbearer.6.0.10.nupkg.sha512",
+    "/home/manovik18/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.11/microsoft.aspnetcore.authentication.jwtbearer.6.0.11.nupkg.sha512",
     "/home/manovik18/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/home/manovik18/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
     "/home/manovik18/.nuget/packages/microsoft.data.sqlclient/5.0.1/microsoft.data.sqlclient.5.0.1.nupkg.sha512",

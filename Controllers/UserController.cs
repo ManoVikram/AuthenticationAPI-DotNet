@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using AuthenticationAPI.Context;
@@ -5,6 +7,7 @@ using AuthenticationAPI.Helpers;
 using AuthenticationAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AuthenticationAPI.Controllers
 {
@@ -33,7 +36,9 @@ namespace AuthenticationAPI.Controllers
             if (PasswordHasher.VerifyPassword(userObj.Password, user.Password))
                 return BadRequest(new { Message = "Incorrect password!" });
 
-            return Ok(new { Message = "Login Success!" });
+            user.Token = CreateJwt(user);
+
+            return Ok(new { Token = user.Token, Message = "Login Success!" });
         }
 
         [HttpPost("register")]
@@ -62,6 +67,12 @@ namespace AuthenticationAPI.Controllers
             return Ok(new { Message = "User Registered!" });
         }
 
+        [HttpGet]
+        public async Task<ActionResult<User>> GetAllUsers()
+        {
+            return Ok(await _authContext.Users.ToListAsync());
+        }
+
         private async Task<bool> CheckEmailExistAsync(string email)
         {
             return await _authContext.Users.AnyAsync(x => x.Email == email);
@@ -81,6 +92,29 @@ namespace AuthenticationAPI.Controllers
                 stringBuilder.Append("Password should contain special characters" + Environment.NewLine);
 
             return stringBuilder.ToString();
+        }
+
+        private string CreateJwt(User user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("veryverysecret.....");
+            var identity = new ClaimsIdentity(new Claim[] {
+                // new Claim(ClaimTypes.Role, user.Role"),
+                new Claim(ClaimTypes.Name, user.Name),
+            });
+
+            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = identity,
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = credentials
+            };
+
+            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+
+            return jwtTokenHandler.WriteToken(token);
         }
     }
 }
